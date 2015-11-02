@@ -1,0 +1,59 @@
+@* picture Template File *@
+@(picture: model.Picture, like: List[model.User], iLike: Boolean, thisUser: Boolean, taggs: List[model.User], possibleTags: List[model.User], comments: List[(Long, String, String)])(commentForm: Form[String])(username: String)
+
+@import helper._
+
+@main("picture: " + picture.name, username) {
+	<img src="@routes.Image.show(picture.name)" style="max-width: 1000px; max-height:1000px" />
+	<br/>
+	@if(!iLike) {
+		<a href="@routes.Application.likePicture(picture.id)">Like</a>
+	} else {
+		<a href="@routes.Application.unlikePicture(picture.id)">UnLike</a>
+	}
+	<br/>
+	These guys like this picture: 
+	@like.map { user =>
+		<a href="@routes.Application.user(user.username)">@user.username</a>,
+	}
+	<br/>
+	<br/>
+	TAGGED:
+	@taggs.map { user =>
+		<a href="@routes.Application.user(user.username)">@user.username</a>,
+	}
+	<br/>
+	Tag friends:
+	@possibleTags.map { user =>
+		<a href="@routes.Application.tag(picture.id, user.id)">@user.username</a>,
+	}
+	<br/>
+	
+	@if(thisUser) {
+		@form(action = routes.Application.editPicture(picture.name)) {
+    
+		    <input type="radio" name="public" value="1" @if(picture.public){ checked } />Public<br/>
+		    <input type="radio" name="public" value="0" @if(!picture.public){ checked } />Private
+		    
+		    <p>
+		        <input type="submit" value="Change">
+		    </p>
+		    
+		}
+	}
+	<br/>
+	
+	<h3>Komentari</h3>
+	<table>
+	@comments.map { comment =>
+		<tr>
+			<td>@comment._2:</td><td>@comment._3</td><td><a href="@routes.Application.deleteComment(comment._1, picture.name)">[X]</a></td>
+		</tr>
+	}
+	</table>
+	 @form(routes.Application.addComment(picture.id)) {
+        @inputText(commentForm("text"))
+        
+        <input type="submit" value="Comment">        
+    }
+}

@@ -1,0 +1,22 @@
+@* userPictures Template File *@
+@(pictures: List[model.Picture], thisUser: Boolean)(username: String)
+
+@import helper._
+
+@main("pictures", username) {
+	@if(thisUser) {
+		@form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
+    
+		    <input type="file" name="picture">
+		    
+		    <p>
+		        <input type="submit">
+		    </p>
+		    
+		}
+	}
+	
+	@pictures.map { picture =>
+		<a href="@routes.Application.picture(picture.name)"><img src="@routes.Image.show(picture.name)" width="400" /> <br/>
+	}
+}

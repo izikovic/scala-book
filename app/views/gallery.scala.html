@@ -1,0 +1,10 @@
+@* userPictures Template File *@
+@(pictures: List[model.Picture])(username: String)
+
+@import helper._
+
+@main("gallery", username) {
+	@pictures.map { picture =>
+		<a href="@routes.Application.picture(picture.name)"><img src="@routes.Image.show(picture.name)" width="400" /> <br/>
+	}
+}

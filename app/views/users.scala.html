@@ -1,0 +1,12 @@
+@* users Template File *@
+@(usersList: List[model.User], username: String)
+
+@main("Users", username) {
+	<table>
+	@usersList.map{ user =>
+		<tr>
+			<td><a href="/user/@user.username">@user.firstName @user.lastName</a></td>
+		</tr>
+	}
+	</table>
+}

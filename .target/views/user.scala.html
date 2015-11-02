@@ -1,0 +1,51 @@
+@* user Template File *@
+@(user: model.User, isFriend: Boolean, friends: List[model.User], myRequests: List[model.User], otherRequests: List[model.User], username: String, editable: Boolean = false)
+
+@main(user.username + "'s profile", username) {
+	<h1>@user.username's profile</h1>
+	@if(!isFriend) {
+		<a href="/sendRequest/@user.id">Send friend request</a>
+	}
+	
+	<table>
+		<tr>
+			<td><b>Name: </b></td><td>@user.firstName</td>
+		</tr>
+		<tr>
+			<td><b>Last name: </b></td><td>@user.lastName</td>
+		</tr>
+	</table>
+	
+	<h2>Friends: </h2>
+	<table>
+	@friends.map { user => 
+		<tr>
+			<td><a href="/user/@user.username">@user.firstName @user.lastName</a></td>
+		</tr>
+	}
+	</table>
+	
+	@if(editable) {		
+		<h2>Friend requests:</h2>
+		<table>
+		@otherRequests.map { user => 
+			<tr>
+				<td><a href="/user/@user.username">@user.firstName @user.lastName</a></td>
+				<td><a href="/acceptFriend/@user.id">accept</a></td>
+				<td><a href="/declineFriend/@user.id">decline</a></td>
+			</tr>
+		}
+		</table>
+		
+		<h2>Sent requests:</h2>
+		<table>
+		@myRequests.map { user => 
+			<tr>
+				<td><a href="/user/@user.username">@user.firstName @user.lastName</a></td>
+			</tr>
+		}
+		</table>
+	}
+	
+	<a href="@routes.Application.pictures(user.username)">Gallery</a>
+}

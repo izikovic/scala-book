@@ -1,0 +1,20 @@
+@* login Template File *@
+@(loginForm: Form[(String, String)])(implicit flash: Flash)
+
+@import helper._
+
+@main("Login", "") {
+     
+    <h1>@flash.get("success").getOrElse("Login!")</h1>
+    
+    @form(routes.Auth.authenticate) {
+        
+        @loginForm.globalError.map { error =>
+		  <div>@error.message</div>
+		}
+        @inputText(loginForm("username"))
+        @inputPassword(loginForm("password"))
+        
+        <input type="submit" value="Logiraj se">        
+    }
+}

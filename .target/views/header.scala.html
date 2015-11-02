@@ -1,0 +1,11 @@
+@* header Template File *@
+@(username: String)
+
+<div class="header">
+<a href="@routes.Application.index">Index</a> | <a href="@routes.Application.users">Users</a> | <a href="@routes.Application.gallery">Gallery</a>  
+@if(username != "") {
+	<p>Welcome <a href="/user/@username">@username</a> ! <a href="/logout">logout</a></p>  
+} else {
+	<p><a href="/login">login</a> / <a href="/register">register</a></p>
+}
+</div>

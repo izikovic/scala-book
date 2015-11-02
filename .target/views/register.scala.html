@@ -1,0 +1,21 @@
+@* register Template File *@
+@(registerForm: Form[(String, String, String, String)])
+
+@import helper._
+
+@main("Register", "") {
+    
+    <h1>Please register</h1>
+    
+    @form(routes.Auth.createUser) {
+        
+        @inputText(registerForm("username"))
+        @inputPassword(registerForm("password"))
+        @inputText(registerForm("firstName"))
+        @inputText(registerForm("lastName")) 
+        
+        <input type="submit" value="Registriraj se">
+        
+    }
+
+}

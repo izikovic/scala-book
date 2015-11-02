@@ -1,0 +1,31 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+GET		/register					controllers.Auth.register
+GET		/login						controllers.Auth.login
+GET		/logout						controllers.Auth.logout
+GET		/user/:name					controllers.Application.user(name: String)
+GET		/users						controllers.Application.users
+GET		/acceptFriend/:id			controllers.Application.acceptFriend(id: Long)
+GET		/declineFriend/:id			controllers.Application.declineFriend(id: Long)
+GET		/sendRequest/:id			controllers.Application.sendRequest(id: Long)
+GET		/image/:name				controllers.Image.show(name)
+GET		/pictures/:name				controllers.Application.pictures(name)
+GET		/picture/:name				controllers.Application.picture(name)
+GET		/likePicture/:id			controllers.Application.likePicture(id: Long)
+GET		/unlikePicture/:id			controllers.Application.unlikePicture(id: Long)
+GET		/tag/:img/:user				controllers.Application.tag(img: Long, user: Long)
+GET		/gallery					controllers.Application.gallery
+GET		/deleteComment/:id/:img		controllers.Application.deleteComment(id: Long, img: String)
+
+POST	/register					controllers.Auth.createUser
+POST	/login						controllers.Auth.authenticate
+POST	/upload						controllers.Application.upload
+POST	/editPicture/:name			controllers.Application.editPicture(name)
+POST	/addComment/:img			controllers.Application.addComment(img: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
